@@ -6,31 +6,48 @@ public class Brick {
 
 	private int brickX;
 	private int brickY;
+	private int brickMaxX;
+	private int brickMaxY;
+	
 	private Color color;
 	private boolean broken;
 	
-	public Brick(int brickX, int brickY, Color color) {
+	public Brick(int brickX, int brickY, int width, int height, Color color) {
 		
 		this.color = color;
 		this.brickX = brickX;
 		this.brickY = brickY;
+		this.brickMaxX = brickX + width;
+		this.brickMaxY = brickY + height;
 		this.broken = false;
 	}
 
 	public int getBrickX() {
-		return brickX;
+		return this.brickX;
 	}
 
 	public int getBrickY() {
-		return brickY;
+		return this.brickY;
 	}
 
+	public int getBrickMaxX() {
+		return this.brickMaxX;
+	}
+
+	public int getBrickMaxY() {
+		return this.brickMaxY;
+	}
+	
 	public Color getColor() {
-		return color;
+		return this.color;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public boolean isBroken() {
-		return broken;
+		return this.broken;
 	}
 
 	public void setBroken(boolean broken) {
