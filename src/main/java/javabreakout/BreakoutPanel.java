@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -19,12 +20,31 @@ public class BreakoutPanel extends JPanel implements Runnable {
 	private final int brickHeight = 32;
 	private final int brickBuffer = 128;
 	private final int ballSize = 11;
+	
+	private final List<Integer> DATA = Arrays.asList(
+			17, 18, 22, 25, 26, 27, 30,
+			33, 35, 37, 39, 42, 45, 47,
+			49, 51, 53, 55, 58, 61, 63,
+			65, 67, 69, 70, 71, 74, 77, 78, 79,
+			81, 83, 85, 87, 90, 93, 95,
+			97, 98, 101, 103, 106, 109, 111);
+	
+	private final List<Integer> STAX = Arrays.asList(
+			18, 21, 22, 23, 26, 29, 31,
+			33, 35, 38, 41, 43, 45, 47,
+			49, 54, 57, 59, 61, 63,
+			66, 70, 73, 74, 75, 78,
+			83, 86, 89, 91, 93, 95,
+			97, 98, 102, 105, 107, 109, 111);
+			
+	
 
 	private boolean ballIsDead;
 	private boolean ballIsPlayable;
 	
 	private int panelHeight;
 	private int panelWidth;
+	private int frameCounter;
 		
 	private Ball ball;
 	private KeyHandler keyHandler;
@@ -76,20 +96,30 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		List<Brick> returnVal = new ArrayList<>();
 		int brickRow = 0;
 		int brickCol = 0;
+		int brickIndex = 0;
 		
-		while (brickCol < 16) {
+		while (brickRow < 8) {
 			
-			while (brickRow < 8) {
+			while (brickCol < 16) {
 				
+//				Brick newBrick = new Brick(brickCol * brickWidth, 
+//						(brickRow * brickHeight) + brickBuffer,
+//						brickCol + brickWidth, brickRow + brickHeight,
+//						colorList.get(brickRow));
+
 				Brick newBrick = new Brick(brickCol * brickWidth, 
 						(brickRow * brickHeight) + brickBuffer,
 						brickCol + brickWidth, brickRow + brickHeight,
-						colorList.get(brickRow));
+						new Color(192, brickRow * 20, 255));
+
+				newBrick.setBrickIndex(brickIndex);
+				
 				returnVal.add(newBrick);
-				brickRow++;
+				brickCol++;
+				brickIndex++;
 			}
-			brickRow = 0;
-			brickCol++;
+			brickCol = 0;
+			brickRow++;
 		}
 		
 		return returnVal;
@@ -103,7 +133,12 @@ public class BreakoutPanel extends JPanel implements Runnable {
 			
 			// compute pauses based on frames per second
 			try {
+				frameCounter++;
 				Thread.sleep(1000 / fPS);
+				
+				if (frameCounter >= 600) {
+					frameCounter = 0;
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -225,7 +260,24 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		
 			int brickX = brick.getBrickX();
 			int brickY = brick.getBrickY();
-			g2.setColor(brick.getColor());
+			
+			if (!brick.isBroken()) {
+				if (frameCounter < 300) {
+					if (DATA.contains(brick.getBrickIndex())) {
+						g2.setColor(Color.WHITE);
+					} else {
+						g2.setColor(brick.getColor());					
+					}
+				} else {
+					if (STAX.contains(brick.getBrickIndex())) {
+						g2.setColor(Color.WHITE);
+					} else {
+						g2.setColor(brick.getColor());					
+					}				
+				}
+			} else {
+				g2.setColor(Color.BLACK);
+			}
 			g2.fillRect(brickX, brickY, brickWidth, brickHeight);
 		}
 		

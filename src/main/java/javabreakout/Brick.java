@@ -8,6 +8,7 @@ public class Brick {
 	private int brickY;
 	private int brickMaxX;
 	private int brickMaxY;
+	private int brickIndex;
 	
 	private Color color;
 	private boolean broken;
@@ -52,5 +53,13 @@ public class Brick {
 
 	public void setBroken(boolean broken) {
 		this.broken = broken;
+	}
+	
+	public int getBrickIndex() {
+		return this.brickIndex;
+	}
+	
+	public void setBrickIndex(int index) {
+		this.brickIndex = index;
 	}
 }
