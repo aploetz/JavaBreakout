@@ -69,6 +69,7 @@ public class Ball {
 	}
 	
 	public void flipVerticalDirection() {
+		
 		if (movingUp) {
 			movingUp = false;
 		} else {

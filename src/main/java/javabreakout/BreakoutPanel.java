@@ -143,6 +143,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		int paddleX = paddle.getPaddleX();
 		int paddleY = paddle.getPaddleY();
 		int paddleWidth = paddle.getPaddleWidth();
+		int paddleHeight = paddle.getPaddleHeight();
 		
 		if (ballY  > panelHeight) {
 			// bottom "pit"
@@ -152,8 +153,9 @@ public class BreakoutPanel extends JPanel implements Runnable {
 			ball = null;
 		} else if (ballY >= paddleY && !ball.isMovingUp()) {
 			// paddle
-			// check X axis
-			if (ballX >= paddleX &&
+			// bottom Y axis and check X axis
+			if (ballY < paddleY + paddleHeight &&
+					ballX >= paddleX &&
 					ballX <= paddleX + paddleWidth) {
 
 				ball.setMovingUp(true);
@@ -199,7 +201,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 						bricks.get(brickCounter).setBroken(true);
 						bricks.get(brickCounter).setColor(Color.BLACK);
 
-						// for now, just flip the ball's vertical direction on a brick break
+						// for now, just flip the ball's direction on a brick break
 						ball.flipVerticalDirection();
 					}
 				}
