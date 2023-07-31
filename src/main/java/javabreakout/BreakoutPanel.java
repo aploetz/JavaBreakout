@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -26,13 +26,14 @@ public class BreakoutPanel extends JPanel implements Runnable {
 	private int panelHeight;
 	private int panelWidth;
 		
-	private Ball ball;
-	private KeyHandler keyHandler;
 	private List<Brick> bricks;
 	private List<Color> colorList;
-	private Paddle paddle;
-	private Thread panelThread;
 	
+	private Ball ball;
+	private KeyHandler keyHandler;
+	private Paddle paddle;
+	private Thread panelThread;	
+
 	public BreakoutPanel() {
 		this(1024,1024);
 	}
@@ -44,30 +45,31 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setBackground(Color.black);
-		this.setDoubleBuffered(true);
 		this.setFocusable(true);
 
 		keyHandler = new KeyHandler(this);
 		this.addKeyListener(keyHandler);
 		
 		bricks = generateBricks();
-		paddle = new Paddle((panelWidth / 2) - 64, panelHeight - 200, 128, 16);
+		paddle = new Paddle((panelWidth / 2) - 64, panelHeight - 200, 128, 16, 16);
 		ballIsDead = true;
 		ballIsPlayable = false;
-		panelThread = new Thread(this);
+		panelThread = Thread.ofVirtual()
+				.name("Breakout")
+				.unstarted(this);
 	}
 
 	private void generateColors() {
 		colorList = new ArrayList<>();
 		
-		colorList.add(Color.BLUE);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.CYAN);
 		colorList.add(Color.RED);
 		colorList.add(Color.MAGENTA);
 		colorList.add(Color.PINK);
 		colorList.add(Color.GRAY);
 		colorList.add(Color.YELLOW);
+		colorList.add(Color.CYAN);
+		colorList.add(Color.GREEN);
+		colorList.add(Color.BLUE);
 	}
 
 	private List<Brick> generateBricks() {
@@ -97,7 +99,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 	
 	public void run() {
 		
-		while (panelThread != null) {
+		while (panelThread.isAlive()) {
 			update();
 			repaint();
 			
@@ -256,10 +258,6 @@ public class BreakoutPanel extends JPanel implements Runnable {
 	
 	public void start() {
 		panelThread.start();		
-	}
-	
-	public void stop() {
-		panelThread = null;
 	}
 	
 	public void releaseBall() {

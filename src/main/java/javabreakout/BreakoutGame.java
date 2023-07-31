@@ -6,17 +6,16 @@ public class BreakoutGame {
 
 	public static void main(String[] args) {
 		
-		JFrame window = new JFrame();
+		JFrame frame = new JFrame();
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Java Breakout");
+		frame.setVisible(true);
+
 		BreakoutPanel panel = new BreakoutPanel();
-		
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//window.setResizable(false);
-		window.setTitle("Java Breakout");
-		window.add(panel);
-		window.pack();
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		
+		frame.add(panel);
+		frame.pack();
+
 		panel.start();
 	}
 

@@ -7,17 +7,14 @@ public class Paddle {
 	private int paddleWidth;
 	private int paddleSpeed;
 	
-	public Paddle(int paddleX, int paddleY, int paddleWidth, int paddleHeight) {
+	public Paddle(int paddleX, int paddleY, int paddleWidth,
+			int paddleHeight, int paddleSpeed) {
 		
 		this.paddleX = paddleX;
 		this.paddleY = paddleY;
 		this.paddleHeight = paddleHeight;
 		this.paddleWidth = paddleWidth;
-		this.paddleSpeed = 16;
-	}
-	
-	public int getPaddleX() {
-		return this.paddleX;
+		this.paddleSpeed = paddleSpeed;
 	}
 	
 	public void moveLeft() {
@@ -26,6 +23,10 @@ public class Paddle {
 	
 	public void moveRight() {
 		paddleX += paddleSpeed;
+	}
+	
+	public int getPaddleX() {
+		return this.paddleX;
 	}
 	
 	public int getPaddleY() {
