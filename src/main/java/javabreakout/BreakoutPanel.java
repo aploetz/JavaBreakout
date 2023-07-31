@@ -2,6 +2,7 @@ package javabreakout;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -25,7 +26,11 @@ public class BreakoutPanel extends JPanel implements Runnable {
 	
 	private int panelHeight;
 	private int panelWidth;
+	private int score = 0;
+	private int ballsRemaining = 3;
 		
+	private Font arial40 = new Font("Arial", Font.PLAIN, 40);
+	
 	private List<Brick> bricks;
 	private List<Color> colorList;
 	
@@ -155,6 +160,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 			ballIsPlayable = false;
 			// destroy ball
 			ball = null;
+			ballsRemaining--;
 		} else if (ballY >= paddleY && !ball.isMovingUp()) {
 			// paddle
 			// bottom Y axis and check X axis
@@ -202,6 +208,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 						// break brick!
 						brick.setBroken(true);
 						brick.setColor(Color.BLACK);
+						score++;
 
 						// for now, just flip the ball's direction on a brick break
 						ball.flipVerticalDirection();
@@ -243,15 +250,19 @@ public class BreakoutPanel extends JPanel implements Runnable {
 			int centerOffset = ball.getBallSizeOffset();
 			g2.fillRect(ball.getBallX() - centerOffset, ball.getBallY() - centerOffset,
 					ball.getBallSize(), ball.getBallSize());
-		
-			// DEBUG - output ballX and ballY on screen
-			g2.setColor(Color.white);
-			StringBuilder output = new StringBuilder("X:");
-			output.append(ball.getBallX());
-			output.append("  Y:");
-			output.append(ball.getBallY());
-			g2.drawString(output.toString(), 50, 50);
 		}
+		
+		
+		// score and ball remaining
+		StringBuilder scoreBuilder = new StringBuilder("Score: ");
+		scoreBuilder.append(score);
+		StringBuilder currentBallBuilder = new StringBuilder("Current Ball: ");
+		currentBallBuilder.append(ballsRemaining);
+		
+		g2.setColor(Color.white);
+		g2.setFont(arial40);
+		g2.drawString(scoreBuilder.toString(), 50, 50);
+		g2.drawString(currentBallBuilder.toString(), 700, 50);
 		
 		g2.dispose();
 	}
@@ -261,9 +272,11 @@ public class BreakoutPanel extends JPanel implements Runnable {
 	}
 	
 	public void releaseBall() {
-		ball = new Ball(ballSize, panelWidth, brickHeight * 8, brickBuffer);
-		ballIsDead = false;
-		ballIsPlayable = true;
+		if (ballsRemaining > 0) {
+			ball = new Ball(ballSize, panelWidth, brickHeight * 8, brickBuffer);
+			ballIsDead = false;
+			ballIsPlayable = true;
+		}
 	}
 	
 	public boolean getBallIsDead() {
