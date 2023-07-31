@@ -253,7 +253,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		}
 		
 		
-		// score and ball remaining
+		// score and balls remaining
 		StringBuilder scoreBuilder = new StringBuilder("Score: ");
 		scoreBuilder.append(score);
 		StringBuilder currentBallBuilder = new StringBuilder("Current Ball: ");
