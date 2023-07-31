@@ -97,6 +97,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		return returnVal;
 	}
 	
+	@Override
 	public void run() {
 		
 		while (panelThread.isAlive()) {
@@ -121,8 +122,9 @@ public class BreakoutPanel extends JPanel implements Runnable {
 					paddle.moveLeft();
 				}
 			} else {
-				if (paddle.getPaddleX() + paddle.getPaddleSpeed() < panelWidth)
-				paddle.moveRight();
+				if (paddle.getPaddleX() + paddle.getPaddleSpeed() < panelWidth) {
+					paddle.moveRight();
+				}
 			}
 		}
 		
@@ -132,7 +134,7 @@ public class BreakoutPanel extends JPanel implements Runnable {
 			checkCollision();
 
 			if (ballIsPlayable) {
-				// checkCollision method could render the ball uplayable
+				// checkCollision method could render the ball unplayable
 				ball.update();
 			}
 		}
@@ -187,21 +189,19 @@ public class BreakoutPanel extends JPanel implements Runnable {
 		} else if (ballY <= (brickHeight * 8) + brickBuffer + brickHeight &&
 				ballY > brickBuffer) {
 			// bricks
-			for (int brickCounter = bricks.size() - 1; brickCounter >= 0; brickCounter--) {
-				// more likely to hit lower bricks first and more often,
-				// so check them from the bottom-up.
-				if (!bricks.get(brickCounter).isBroken()) {
+			for (Brick brick : bricks) {
+				if (!brick.isBroken()) {
 					// only check for collision if it is not broken
-					int brickX = bricks.get(brickCounter).getBrickX();
-					int brickY = bricks.get(brickCounter).getBrickY();
-					int brickMaxX = bricks.get(brickCounter).getBrickMaxX();
-					int brickMaxY = bricks.get(brickCounter).getBrickMaxY();
+					int brickX = brick.getBrickX();
+					int brickY = brick.getBrickY();
+					int brickMaxX = brick.getBrickMaxX();
+					int brickMaxY = brick.getBrickMaxY();
 					
 					if (ballX >= brickX && ballX <= brickMaxX
 							&& ballY >= brickY && ballY <= brickMaxY) {
 						// break brick!
-						bricks.get(brickCounter).setBroken(true);
-						bricks.get(brickCounter).setColor(Color.BLACK);
+						brick.setBroken(true);
+						brick.setColor(Color.BLACK);
 
 						// for now, just flip the ball's direction on a brick break
 						ball.flipVerticalDirection();
