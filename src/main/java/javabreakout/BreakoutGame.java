@@ -10,11 +10,11 @@ public class BreakoutGame {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Java Breakout");
-		frame.setVisible(true);
 
 		BreakoutPanel panel = new BreakoutPanel();
 		frame.add(panel);
 		frame.pack();
+		frame.setVisible(true);
 
 		panel.start();
 	}
