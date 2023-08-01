@@ -36,8 +36,6 @@ public class BreakoutPanel extends JPanel implements Runnable {
 			66, 70, 73, 74, 75, 78,
 			83, 86, 89, 91, 93, 95,
 			97, 98, 102, 105, 107, 109, 111);
-			
-	
 
 	private boolean ballIsDead;
 	private boolean ballIsPlayable;

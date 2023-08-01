@@ -2,6 +2,7 @@
 .settings*
 .classpath*
 .project*
+.java-version
 
 # Compiled class file
 *.class
