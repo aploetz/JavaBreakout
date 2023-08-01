@@ -1,11 +1,23 @@
 # JavaBreakout
-A simple Breakout game written in Java
+A simple Breakout game written in Java 21
 
 <img src="javaBreakout.png" width="200" align=right />
 
-### Build Requirements:
+## To run:
 
- - Java 21
+### Run Requirements
+
+ - Java 21 (JRE)
+
+Download [javabreakout.jar](javabreakout.jar)
+
+    java -jar javabreakout.jar
+
+## To build:
+
+### Build Requirements
+
+ - Java 21 (JDK)
  - Maven
 
 The [pom.xml](pom.xml) file can be adjusted to build with earlier versions of Java, but it is not recommended to go below 17.
@@ -14,6 +26,6 @@ The [pom.xml](pom.xml) file can be adjusted to build with earlier versions of Ja
 
     mvn clean install
 
-### Run
+### Running the build
 
     java -jar target/javabreakout-0.0.1-SNAPSHOT-jar-with-dependencies.jar
